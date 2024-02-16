@@ -1,25 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { CartProvider } from './Context/CartContext';
+import { Provider } from 'react-redux';
+import { store } from './store.js'
+import { productApi } from './Services/API.js';
+import ProductList from './Components/ProductList.js';
+import ProductComments from './Components/ProductComments.js';
+import CommentForm from './Components/CommentForm.js';
+import Cart from './Components/Cart.js'
+import Header from './Components/Header.js'
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <CartProvider>
+        <Header />
+        <Routes>
+          <Route path="/products" exact component={ProductList} />
+          <Route path="/cart" component={Cart} />
+          {}
+        </Routes>
+      </CartProvider>
+    </Router>
   );
-}
+};
 
 export default App;
