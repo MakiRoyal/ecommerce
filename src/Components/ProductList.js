@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGetProductsQuery } from '../Services/API'; 
 import { useCart } from '../Context/CartContext'; 
+import ErrorBoundary from './ErrorBoundary';
 
 
 const ProductList = () => {
@@ -16,14 +17,13 @@ const ProductList = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
   return (
     <div>
       <h2>Produits</h2>
       <ul>
         {products.map((product) => (
           <li key={product.id}>
-            {product.name}{' '}
+            {product.title}{' '}
             <button onClick={() => addItemToCart(product)}>Ajouter au panier</button>
           </li>
         ))}
@@ -32,4 +32,10 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+const ProductListWithErrorBoundary = () => (
+  <ErrorBoundary>
+    <ProductList />
+  </ErrorBoundary>
+);
+
+export default ProductListWithErrorBoundary;

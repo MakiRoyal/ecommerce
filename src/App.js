@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes, BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { CartProvider } from './Context/CartContext';
+import { CartProvider } from './Context/CartContext.js';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { productApi } from './Services/API.js';
@@ -25,8 +25,9 @@ function App() {
       >
         <BrowserRouter>
           <Header />
+          
           <Routes>
-            <Route path="/products" element={<ProductList/>} />
+            <Route path="/" element={<ProductList/>} />
             <Route path="/cart" element={<Cart/>} />
           </Routes>
         </BrowserRouter>
