@@ -2,9 +2,12 @@ import React from 'react';
 import { useGetProductsQuery } from '../Services/API'; 
 import { useCart } from '../Context/CartContext'; 
 
+
 const ProductList = () => {
   const { data: products, error, isLoading } = useGetProductsQuery();
   const { addItemToCart } = useCart();
+
+  console.log('test')
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -1,43 +1,24 @@
-// CommentForm.js
+import React from 'react';
+import { useCart } from '../Context/CartContext';
 
-import React, { useState } from 'react';
-import { useCreateProductsMutation } from '../Services/API'; // Assurez-vous de remplacer le chemin correctement
-
-const CommentForm = ({ productId }) => {
-  const [username, setUsername] = useState('');
-  const [comment, setComment] = useState('');
-  const [createComment] = useCreateProductsMutation();
-
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await createComment({ productId, username, comment });
-      // Réinitialise les champs du formulaire après la création du commentaire
-      setUsername('');
-      setComment('');
-    } catch (error) {
-      console.error('Erreur lors de la soumission du commentaire :', error.message);
-    }
-  };
+const Cart = () => {
+  const { cart, removeItemFromCart, clearCart } = useCart();
 
   return (
     <div>
-      <h2>Ajouter un commentaire</h2>
-      <form onSubmit={handleCommentSubmit}>
-        <label>
-          Nom d'utilisateur:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Commentaire:
-          <textarea value={comment} onChange={(e) => setComment(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Envoyer le commentaire</button>
-      </form>
+      <h2>Mon Panier</h2>
+      <ul>
+        {cart.items.map((item) => (
+          <li key={item.id}>
+            {item.name}{' '}
+            <button onClick={() => removeItemFromCart(item)}>Retirer du panier</button>
+          </li>
+        ))}
+      </ul>
+      <p>Total d'articles dans le panier : {cart.items.length}</p>
+      <button onClick={clearCart}>Vider le panier</button>
     </div>
   );
 };
 
-export default CommentForm;
+export default Cart;
